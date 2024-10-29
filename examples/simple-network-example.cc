@@ -143,7 +143,7 @@ main(int argc, char* argv[])
     /******************
      * Set Data Rates *
      ******************/
-    std::vector<int> sfQuantity(6);
+    std::vector<uint16_t> sfQuantity(6,0);
     sfQuantity = LorawanMacHelper::SetSpreadingFactorsUp(endDevices, gateways, channel);
 
     /****************
