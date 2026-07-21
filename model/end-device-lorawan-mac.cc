@@ -150,7 +150,7 @@ EndDeviceLorawanMac::Send(Ptr<Packet> packet)
     // or because we are receiving, schedule a tx/retx later
 
     Time netxTxDelay = GetNextTransmissionDelay();
-    if (netxTxDelay != Seconds(0))
+    if (!netxTxDelay.IsZero())
     {
         postponeTransmission(netxTxDelay, packet);
         return;
@@ -564,7 +564,7 @@ EndDeviceLorawanMac::GetChannelForTx()
         NS_LOG_DEBUG("Waiting time for current channel = " << waitingTime.GetSeconds());
 
         // Send immediately if we can
-        if (waitingTime == Seconds(0))
+        if (waitingTime.IsZero())
         {
             return *it;
         }

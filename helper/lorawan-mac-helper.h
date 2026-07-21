@@ -18,6 +18,7 @@
 #include "ns3/net-device.h"
 #include "ns3/node-container.h"
 #include "ns3/random-variable-stream.h"
+#include "ns3/object-factory.h"
 
 namespace ns3
 {
@@ -97,7 +98,7 @@ class LorawanMacHelper
      * \param device The device within which this MAC will be created.
      * \return A newly-created LorawanMac object.
      */
-    Ptr<LorawanMac> Create(Ptr<Node> node, Ptr<NetDevice> device) const;
+    Ptr<LorawanMac> Install(Ptr<Node> node, Ptr<NetDevice> device) const;
 
     /**
      * Initialize the end devices' data rate parameter.

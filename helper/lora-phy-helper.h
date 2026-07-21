@@ -16,6 +16,7 @@
 #include "ns3/object-factory.h"
 #include "ns3/simple-end-device-lora-phy.h"
 #include "ns3/simple-gateway-lora-phy.h"
+#include "ns3/node.h"
 
 namespace ns3
 {
@@ -80,7 +81,7 @@ class LoraPhyHelper
      * \param device The device within which this PHY will be created.
      * \return A newly-created PHY object.
      */
-    Ptr<LoraPhy> Create(Ptr<Node> node, Ptr<NetDevice> device) const;
+    Ptr<LoraPhy> Install(Ptr<Node> node, Ptr<NetDevice> device) const;
 
     /**
      * Set the maximum number of gateway receive paths.

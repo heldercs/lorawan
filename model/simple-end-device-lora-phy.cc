@@ -72,10 +72,10 @@ SimpleEndDeviceLoraPhy::Send(Ptr<Packet> packet,
     LoraTag tag;
     packet->RemovePacketTag(tag);
     tag.SetSpreadingFactor(txParams.sf);
-  	tag.SetNodeId(m_device->GetNode()->GetId());
+  	tag.SetNodeId(m_device ? m_device->GetNode()->GetId() : 0);
     packet->AddPacketTag(tag);
 
-  	NS_LOG_DEBUG("sending id: " <<  (unsigned)m_device->GetNode()->GetId() << " sf: " << (unsigned)txParams.sf);
+  	NS_LOG_DEBUG("sending id: " <<  (unsigned)(m_device ? m_device->GetNode()->GetId() : 0) << " sf: " << (unsigned)txParams.sf);
 
     // Send the packet over the channel
     NS_LOG_INFO("Sending the packet in the channel");
@@ -113,7 +113,7 @@ SimpleEndDeviceLoraPhy::StartReceive(Ptr<Packet> packet,
     // still incoming.
 
     Ptr<LoraInterferenceHelper::Event> event;
-    event = m_interference.Add(duration, rxPowerDbm, sf, m_device->GetNode ()->GetId (), 0, packet, frequencyMHz);
+    event = m_interference.Add(duration, rxPowerDbm, sf, (m_device ? m_device->GetNode()->GetId() : 0), 0, packet, frequencyMHz);
 
     // Switch on the current PHY state
     switch (m_state)

@@ -138,6 +138,7 @@ class DownlinkPacketTest : public TestCase
      * \param packet The packet being retransmitted.
      */
     void ReceivedPacketAtEndDevice(uint8_t requiredTransmissions,
+                                   uint8_t sf,
                                    bool success,
                                    Time time,
                                    Ptr<Packet> packet);
@@ -170,6 +171,7 @@ DownlinkPacketTest::~DownlinkPacketTest()
 
 void
 DownlinkPacketTest::ReceivedPacketAtEndDevice(uint8_t requiredTransmissions,
+                                              uint8_t sf,
                                               bool success,
                                               Time time,
                                               Ptr<Packet> packet)
@@ -298,7 +300,7 @@ LinkCheckTest::SendPacket(Ptr<Node> endDevice, bool requestAck)
         macLayer->SetMType(LorawanMacHeader::CONFIRMED_DATA_UP);
     }
 
-    macLayer->AddMacCommand(Create<LinkCheckReq>());
+    macLayer->AddMacCommand(CreateObject<LinkCheckReq>());
 
     endDevice->GetDevice(0)->Send(Create<Packet>(20), Address(), 0);
 }

@@ -17,14 +17,6 @@ namespace lorawan
 
 NS_LOG_COMPONENT_DEFINE("GatewayStatus");
 
-TypeId
-GatewayStatus::GetTypeId()
-{
-    static TypeId tid =
-        TypeId("ns3::GatewayStatus").AddConstructor<GatewayStatus>().SetGroupName("lorawan");
-    return tid;
-}
-
 GatewayStatus::GatewayStatus()
 {
     NS_LOG_FUNCTION(this);

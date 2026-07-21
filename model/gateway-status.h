@@ -13,7 +13,7 @@
 
 #include "ns3/address.h"
 #include "ns3/net-device.h"
-#include "ns3/object.h"
+#include "ns3/simple-ref-count.h"
 
 namespace ns3
 {
@@ -32,17 +32,12 @@ namespace lorawan
  * downlink scheduling and sending purposes. That is, to check the gateway's availability for radio
  * transmission, and then to retrieve the correct Net Device to send the packet through.
  */
-class GatewayStatus : public Object
+class GatewayStatus : public SimpleRefCount<GatewayStatus>
 {
   public:
-    /**
-     *  Register this type.
-     *  \return The object TypeId.
-     */
-    static TypeId GetTypeId();
 
     GatewayStatus();           //!< Default constructor
-    ~GatewayStatus() override; //!< Destructor
+    ~GatewayStatus(); //!< Destructor
 
     /**
      * Construct a new GatewayStatus object with values.

@@ -77,7 +77,7 @@ PeriodicSenderHelper::InstallPriv(Ptr<Node> node) const
     Ptr<PeriodicSender> app = m_factory.Create<PeriodicSender>();
 
     Time interval;
-    if (m_period == Seconds(0))
+    if (m_period.IsZero())
     {
         double intervalProb = m_intervalProb->GetValue();
         NS_LOG_DEBUG("IntervalProb = " << intervalProb);

@@ -7,8 +7,12 @@
  */
 
 #include "lora-helper.h"
-
 #include "ns3/log.h"
+
+#include "ns3/class-a-end-device-lorawan-mac.h"
+#include "ns3/lora-net-device.h"
+#include "ns3/lora-phy.h"
+#include "ns3/simulator.h"
 
 #include <fstream>
 
@@ -47,7 +51,7 @@ LoraHelper::Install(const LoraPhyHelper& phyHelper,
         Ptr<LoraNetDevice> device = CreateObject<LoraNetDevice>();
 
         // Create the PHY
-        Ptr<LoraPhy> phy = phyHelper.Create(node, device);
+        Ptr<LoraPhy> phy = phyHelper.Install(node, device);
         NS_ASSERT(phy);
         device->SetPhy(phy);
         NS_LOG_DEBUG("Done creating the PHY");
@@ -85,7 +89,7 @@ LoraHelper::Install(const LoraPhyHelper& phyHelper,
         }
 
         // Create the MAC
-        Ptr<LorawanMac> mac = macHelper.Create(node, device);
+        Ptr<LorawanMac> mac = macHelper.Install(node, device);
         NS_ASSERT(mac);
         mac->SetPhy(phy);
         NS_LOG_DEBUG("Done creating the MAC");
@@ -181,7 +185,7 @@ LoraHelper::DoPrintDeviceStatus(NodeContainer endDevices,
 {
     const char* c = filename.c_str();
     std::ofstream outputFile;
-    if (Simulator::Now() == Seconds(0))
+    if (Simulator::Now().IsZero())
     {
         // Delete contents of the file as it is opened
         outputFile.open(c, std::ofstream::out | std::ofstream::trunc);
@@ -245,7 +249,7 @@ LoraHelper::DoPrintPhyPerformance(NodeContainer gateways, std::string filename)
 
     const char* c = filename.c_str();
     std::ofstream outputFile;
-    if (Simulator::Now() == Seconds(0))
+    if (Simulator::Now().IsZero())
     {
         // Delete contents of the file as it is opened
         outputFile.open(c, std::ofstream::out | std::ofstream::trunc);
@@ -292,7 +296,7 @@ LoraHelper::DoPrintGlobalPerformance(std::string filename)
 
     const char* c = filename.c_str();
     std::ofstream outputFile;
-    if (Simulator::Now() == Seconds(0))
+    if (Simulator::Now().IsZero())
     {
         // Delete contents of the file as it is opened
         outputFile.open(c, std::ofstream::out | std::ofstream::trunc);

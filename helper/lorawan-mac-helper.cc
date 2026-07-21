@@ -8,6 +8,9 @@
 
 #include "lorawan-mac-helper.h"
 
+#include "ns3/class-a-end-device-lorawan-mac.h"
+#include "ns3/gateway-lorawan-mac.h"
+
 #include "ns3/end-device-lora-phy.h"
 #include "ns3/gateway-lora-phy.h"
 #include "ns3/log.h"
@@ -63,7 +66,7 @@ LorawanMacHelper::SetRegion(enum LorawanMacHelper::Regions region)
 }
 
 Ptr<LorawanMac>
-LorawanMacHelper::Create(Ptr<Node> node, Ptr<NetDevice> device) const
+LorawanMacHelper::Install(Ptr<Node> node, Ptr<NetDevice> device) const
 {
     Ptr<LorawanMac> mac = m_mac.Create<LorawanMac>();
     mac->SetDevice(device);
@@ -531,15 +534,15 @@ LorawanMacHelper::SetSpreadingFactorsUp(NodeContainer endDevices,
             mac->SetDataRate(1);
             sfQuantity[4] = sfQuantity[4] + 1;
         }
-        else if (rxPower > *(edSensitivity+5))
+        else if (rxPower > *(edSensitivity + 5))
         {
-            mac->SetDataRate (0);
+            mac->SetDataRate(0);
             sfQuantity[5] = sfQuantity[5] + 1;
 
         }
         else // Device is out of range. Assign SF12.
         {
-            mac->SetDataRate (0);
+            mac->SetDataRate(0);
             sfQuantity[5] = sfQuantity[5] + 1;
         }
         /*
