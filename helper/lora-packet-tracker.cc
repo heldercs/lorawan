@@ -499,6 +499,44 @@ LoraPacketTracker::CountMacPacketsGloballyDelay (Time startTime, Time stopTime, 
 
 }
 
+std::string
+LoraPacketTracker::CountMacPacketsForType(Time startTime, Time stopTime, NodeType type, uint16_t nodeEdge, uint16_t nDev){
+    NS_LOG_FUNCTION(this << startTime << stopTime);
+
+    double sent = 0;
+    double received = 0;
+    for (auto it = m_macPacketTracker.begin(); it != m_macPacketTracker.end(); ++it){
+		switch (type) {
+			case REGULAR:
+				if((*it).second.senderId >=0 && (*it).second.senderId < nodeEdge){
+					if ((*it).second.sendTime >= startTime && (*it).second.sendTime <= stopTime){
+            			sent++;
+            			if (!(*it).second.receptionTimes.empty()){
+                			received++;
+            			}
+        			}
+				}
+			break;
+			case ALARM:
+				if((*it).second.senderId >= nodeEdge && (*it).second.senderId < nDev){
+					if ((*it).second.sendTime >= startTime && (*it).second.sendTime <= stopTime){
+            			sent++;
+            			if (!(*it).second.receptionTimes.empty()){
+                			received++;
+            			}
+        			}
+				}
+			break;
+			default:
+			break;
+		}				/* -----  end switch  ----- */
+    }
+    return std::to_string(sent) + " " + std::to_string(received);
+}
+
+
+
+
 
 } // namespace lorawan
 } // namespace ns3

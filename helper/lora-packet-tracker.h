@@ -81,6 +81,11 @@ typedef std::map<Ptr<const Packet>, MacPacketStatus> MacPacketData;
 typedef std::map<Ptr<const Packet>, PacketStatus> PhyPacketData;
 typedef std::map<Ptr<const Packet>, RetransmissionStatus> RetransmissionData;
 
+
+enum nodeType { ALARM, REGULAR };				/* ----------  end of enum nodeType  ---------- */
+
+typedef enum nodeType NodeType;
+
 /**
  * \ingroup lorawan
  *
@@ -291,6 +296,11 @@ class LoraPacketTracker
 											  uint8_t sf);
 
 
+	std::string CountMacPacketsForType (Time startTime, 
+										Time stopTime, 
+										NodeType type, 
+										uint16_t nodeEdge, 
+										uint16_t nDev);
 
   private:
     PhyPacketData m_packetTracker;              //!< Packet map of PHY layer metrics
